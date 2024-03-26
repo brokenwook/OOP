@@ -1,0 +1,36 @@
+#include <iostream>
+#include <vector>
+#include <random>
+
+class Letter {
+public:
+    int address;
+
+    Letter() : address(rand() % 10000 + 1) {}
+};
+
+int main() {
+    setlocale(0, "");
+    std::vector<Letter> letters(10);
+
+    std::cout << "Письма с десятками делящимися на 3:" << std::endl;
+    for (const auto& letter : letters) {
+        if (letter.address % 100 / 10 % 3 == 0) {
+            std::cout << "Address: " << letter.address << std::endl;
+        }
+    }
+
+    auto it = letters.begin();
+    for (; it != letters.end(); ++it) {
+        if (it->address % 100 / 10 % 3 == 0) {
+            it = letters.insert(it + 1, letters[0]);
+        }
+    }
+
+    std::cout << "\nAll letters:" << std::endl;
+    for (const auto& letter : letters) {
+        std::cout << "Address: " << letter.address << std::endl;
+    }
+
+    return 0;
+}
